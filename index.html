@@ -1,595 +1,532 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Osmanlı Padişahları Biyografisi ve Sesli Anlatım</title>
-  <!-- Osmanlı Konseptli Şekilli Yazı Tipleri -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@600;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-  
-  <style>
-    /* Tiiny Host Pembe Reklam ve Önizleme Rozetlerini Tamamen Engelleme */
-    #tiiny-badge, 
-    [id*="tiiny"], 
-    [class*="tiiny"],
-    a[href*="tiiny.host"],
-    iframe[src*="tiiny"],
-    div:has(> a[href*="tiiny.host"]) {
-      display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-      pointer-events: none !important;
-      height: 0 !important;
-      position: absolute !important;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Osmanlı Padişahları - Yusuf Eren Beyoğlu</title>
+    <style>
+        :root {
+            --primary-gold: #d4af37;
+            --dark-bg: #0b0b0b;
+            --card-bg: #141414;
+            --panel-bg: #1a1a1a;
+            --text-color: #f1f1f1;
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 140px;
+        }
 
-    html, body {
-      font-family: 'Quicksand', sans-serif;
-      background: #0d0b08 linear-gradient(180deg, #0d0b08 0%, #17120c 100%);
-      color: #e8e0d5;
-      touch-action: pan-y;
-      overflow-y: auto;
-      min-height: 100vh;
-      -webkit-overflow-scrolling: touch;
-    }
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            border-bottom: 2px solid var(--primary-gold);
+            background: linear-gradient(to bottom, #1f1f1f, var(--dark-bg));
+        }
 
-    /* Şık Altın Rengi Scrollbar */
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0d0b08;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, #d4af37, #8a6d1b);
-      border-radius: 5px;
-    }
+        header h1 {
+            color: var(--primary-gold);
+            font-size: 1.8rem;
+            margin: 0;
+            letter-spacing: 1px;
+        }
 
-    header {
-      text-align: center;
-      padding: 40px 20px 25px 20px;
-      background: linear-gradient(180deg, rgba(20, 15, 10, 0.95), rgba(13, 11, 8, 0.8));
-      border-bottom: 2px solid #d4af37;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-    }
+        header p {
+            color: #aaa;
+            font-size: 0.95rem;
+            margin-top: 8px;
+        }
 
-    header h1 {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 2.3rem;
-      background: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-      margin-bottom: 12px;
-      letter-spacing: 2px;
-    }
+        /* Arama ve Filtreleme Alanı */
+        .filter-section {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
 
-    header p {
-      font-family: 'Cinzel', serif;
-      color: #c5b396;
-      font-size: 1rem;
-      letter-spacing: 1px;
-    }
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
+            background: #141414;
+            border: 1px solid var(--primary-gold);
+            border-radius: 25px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            box-sizing: border-box;
+            text-align: center;
+        }
 
-    .container {
-      max-width: 1200px;
-      margin: 35px auto;
-      padding: 0 20px 160px 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 30px;
-    }
+        .search-box::placeholder {
+            color: #888;
+        }
 
-    .card {
-      background: #14110c;
-      border: 1px solid #3d311d;
-      border-radius: 16px;
-      padding: 18px;
-      text-align: center;
-      transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-      cursor: pointer;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
-    }
+        .era-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
 
-    .card:hover {
-      transform: translateY(-8px) scale(1.02);
-      border-color: #d4af37;
-      box-shadow: 0 12px 28px rgba(212, 175, 55, 0.3);
-    }
+        .era-btn {
+            background: #1a1a1a;
+            color: #ccc;
+            border: 1px solid #444;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
 
-    .card.active {
-      border-color: #e6c667;
-      box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
-    }
+        .era-btn.active, .era-btn:hover {
+            background: var(--primary-gold);
+            color: #000;
+            border-color: var(--primary-gold);
+            font-weight: bold;
+        }
 
-    .card .num-badge {
-      font-family: 'Cinzel', serif;
-      color: #d4af37;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 10px 20px 20px 20px;
+        }
 
-    .img-frame {
-      width: 100%;
-      height: 250px;
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 15px;
-      border: 1px solid #4a3c22;
-      background: #080705;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+        .sultan-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--primary-gold);
+            border-radius: 12px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+            text-align: center;
+        }
 
-    .img-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      background-color: #080705;
-      transition: transform 0.4s ease;
-    }
+        .sultan-header {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary-gold);
+            padding: 15px;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #222;
+        }
 
-    .card:hover .img-frame img {
-      transform: scale(1.03);
-    }
+        .image-container {
+            width: 100%;
+            height: 380px;
+            overflow: hidden;
+            background-color: #000;
+            position: relative;
+        }
 
-    .card h3 {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 1.25rem;
-      color: #f3e5ab;
-      margin-bottom: 10px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-    }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 25%; 
+            transition: transform 0.4s ease;
+        }
 
-    .card .play-btn-text {
-      font-family: 'Cinzel', serif;
-      margin-top: auto;
-      padding: 10px;
-      background: linear-gradient(135deg, #2a2012, #18130a);
-      border: 1px solid #6b5323;
-      border-radius: 8px;
-      color: #d4af37;
-      font-weight: bold;
-      font-size: 0.88rem;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
+        .image-container img:hover {
+            transform: scale(1.03);
+        }
 
-    .card:hover .play-btn-text {
-      background: linear-gradient(135deg, #d4af37, #997825);
-      color: #000;
-    }
+        .sultan-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
 
-    .player-modal {
-      display: none;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(15, 12, 8, 0.98);
-      border-top: 2px solid #d4af37;
-      box-shadow: 0 -10px 30px rgba(0,0,0,0.9);
-      padding: 20px 25px;
-      z-index: 1000;
-      backdrop-filter: blur(8px);
-    }
+        /* Metinleri dümdüz olmaktan çıkarıp şekilli, alıntılı ve şık bir karta dönüştüren stil */
+        .sultan-quote-preview {
+            padding: 0 25px;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #d1d1d1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            border-left: 3px solid var(--primary-gold);
+            text-align: left;
+            background: rgba(212, 175, 55, 0.03);
+            padding: 12px 15px 12px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 20px 20px 20px;
+        }
 
-    .player-modal.open {
-      display: flex;
-      flex-direction: column;
-      animation: slideUp 0.3s ease-out forwards;
-    }
+        .play-btn {
+            background: linear-gradient(135deg, #d4af37, #aa8c2c);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-bottom: 25px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
 
-    @keyframes slideUp {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0); }
-    }
+        .play-btn:active {
+            transform: scale(0.96);
+        }
 
-    .player-content {
-      max-width: 1000px;
-      margin: 0 auto;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+        #audio-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--panel-bg);
+            border-top: 2px solid var(--primary-gold);
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.8);
+            transform: translateY(100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+            padding: 15px 20px;
+            box-sizing: border-box;
+        }
 
-    .player-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+        #audio-panel.active {
+            transform: translateY(0);
+        }
 
-    .player-title {
-      font-family: 'Cinzel Decorative', serif;
-      color: #d4af37;
-      font-size: 1.3rem;
-    }
+        .panel-content {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
 
-    .close-btn {
-      background: transparent;
-      border: 1px solid #d4af37;
-      color: #d4af37;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-    }
+        .close-panel {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: none;
+            border: 1px solid var(--primary-gold);
+            color: var(--primary-gold);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .close-btn:hover {
-      background: #d4af37;
-      color: #000;
-    }
+        .panel-title {
+            color: var(--primary-gold);
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
 
-    .player-bio {
-      color: #d0c4b0;
-      font-size: 0.95rem;
-      line-height: 1.6;
-      max-height: 90px;
-      overflow-y: auto;
-      padding-right: 5px;
-      text-align: justify;
-    }
+        .panel-bio {
+            font-size: 0.9rem;
+            color: #ddd;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            max-height: 90px;
+            overflow-y: auto;
+            font-style: italic;
+        }
 
-    .controls-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 5px;
-      flex-wrap: wrap;
-    }
+        .panel-controls {
+            display: flex;
+            gap: 10px;
+        }
 
-    .action-btn {
-      background: linear-gradient(135deg, #d4af37, #997825);
-      border: none;
-      color: #0d0b08;
-      font-family: 'Cinzel', serif;
-      font-weight: bold;
-      padding: 9px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.9rem;
-      transition: all 0.2s ease;
-    }
+        .control-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid var(--primary-gold);
+            font-size: 0.9rem;
+        }
 
-    .action-btn:hover {
-      transform: scale(1.04);
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-    }
+        .btn-pause {
+            background-color: var(--primary-gold);
+            color: #000;
+        }
 
-    .secondary-btn {
-      background: #221c13;
-      border: 1px solid #d4af37;
-      color: #d4af37;
-      font-family: 'Cinzel', serif;
-      font-weight: bold;
-      padding: 9px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.9rem;
-      transition: all 0.2s ease;
-    }
+        .btn-replay {
+            background-color: transparent;
+            color: var(--primary-gold);
+        }
 
-    .secondary-btn:hover {
-      background: #d4af37;
-      color: #0d0b08;
-    }
+        .status-text {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 5px;
+            text-align: center;
+        }
 
-    .status-indicator {
-      font-family: 'Cinzel', serif;
-      color: #a89878;
-      font-size: 0.85rem;
-      margin-left: auto;
-    }
+        .feedback-section {
+            max-width: 600px;
+            margin: 40px auto 20px auto;
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
 
-    /* En Aşağıdaki Düzeltme / Öneri Form Paneli */
-    .feedback-section {
-      max-width: 800px;
-      margin: 50px auto 40px auto;
-      background: #14110c;
-      border: 1px solid #3d311d;
-      border-radius: 16px;
-      padding: 25px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
-    }
+        .feedback-section h3 {
+            color: var(--primary-gold);
+            font-size: 1.2rem;
+            margin-top: 0;
+            text-align: center;
+        }
 
-    .feedback-section h3 {
-      font-family: 'Cinzel Decorative', serif;
-      color: #d4af37;
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      text-align: center;
-    }
+        .feedback-form input, .feedback-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            background: #0b0b0b;
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #fff;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
 
-    .feedback-section p {
-      color: #c5b396;
-      font-size: 0.9rem;
-      text-align: center;
-      margin-bottom: 20px;
-    }
+        .feedback-form button {
+            width: 100%;
+            background-color: var(--primary-gold);
+            color: #000;
+            border: none;
+            padding: 10px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+        }
 
-    .feedback-form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .feedback-form textarea {
-      width: 100%;
-      height: 90px;
-      background: #080705;
-      border: 1px solid #4a3c22;
-      border-radius: 8px;
-      padding: 12px;
-      color: #e8e0d5;
-      font-family: 'Quicksand', sans-serif;
-      resize: vertical;
-    }
-
-    .feedback-form textarea:focus {
-      outline: none;
-      border-color: #d4af37;
-    }
-
-    .feedback-form button {
-      background: linear-gradient(135deg, #d4af37, #997825);
-      border: none;
-      color: #0d0b08;
-      font-family: 'Cinzel', serif;
-      font-weight: bold;
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.95rem;
-      transition: all 0.2s ease;
-    }
-
-    .feedback-form button:hover {
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-    }
-
-    @media (max-width: 600px) {
-      header h1 { font-size: 1.7rem; }
-      .container { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
-      .player-modal { padding: 15px; }
-      .status-indicator { width: 100%; margin-left: 0; margin-top: 5px; }
-      .feedback-section { margin: 30px 15px; padding: 18px; }
-    }
-  </style>
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: var(--primary-gold);
+            font-weight: bold;
+            font-size: 0.95rem;
+            border-top: 1px solid #222;
+            margin-top: 40px;
+            background-color: #0d0d0d;
+        }
+    </style>
 </head>
 <body>
 
-  <header>
-    <h1>Osmanlı Padişahları Biyografisi</h1>
-    <p>Padişah kartına dokunarak biyografiyi açabilir ve sesli anlatımı dinleyebilirsiniz.</p>
-  </header>
+    <header>
+        <h1>OSMANLI PADİŞAHLARI</h1>
+        <p>36 Osmanlı Padişahı Kendi Ağzından Biyografilerini Anlatıyor</p>
+    </header>
 
-  <div class="container" id="padisah-container"></div>
-
-  <!-- En Aşağıdaki Düzeltme / Mail Gönderme Paneli (beyoglueren7@gmail.com adresine yönlendirildi) -->
-  <div class="feedback-section">
-    <h3>Düzeltme & Öneri Bildir</h3>
-    <p>Projeyle ilgili eksik veya düzeltilmesini istediğin bir şey varsa buraya yazıp doğrudan mail olarak alabilirsin.</p>
-    <form class="feedback-form" action="https://formspree.io/f/xlgppvye" method="POST">
-      <input type="hidden" name="_replyto" value="beyoglueren7@gmail.com">
-      <textarea name="mesaj" placeholder="Düzeltme talebini veya önerini buraya yaz..." required></textarea>
-      <button type="submit">Öneriyi Gönder</button>
-    </form>
-  </div>
-
-  <!-- Açılan Biyografi ve Kontrol Paneli -->
-  <div class="player-modal" id="playerModal">
-    <div class="player-content">
-      <div class="player-header">
-        <h2 class="player-title" id="modalTitle">Padişah İsmi</h2>
-        <button class="close-btn" id="closeModalBtn">✕</button>
-      </div>
-      <p class="player-bio" id="modalBio">Biyografi metni burada görünecektir.</p>
-      <div class="controls-row">
-        <button class="action-btn" id="togglePlayBtn">
-          <span id="btnIcon">▶</span> <span id="btnText">Durdur / Başlat</span>
-        </button>
-        <button class="secondary-btn" id="restartBtn">
-          <span>⟳</span> Tekrar Oynat
-        </button>
-        <span class="status-indicator" id="statusText">Dinlemek için oynatın</span>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const padisahlar = [
-      { id: 1, name: "Osman Gazi", bio: "Osmanlı Beyliği'nin kurucusu ve ilk hükümdarıdır. 1299 yılında bağımsızlığını ilan ederek devletin temellerini atmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/3/3d/Osman_I.jpg", audio: "https://files.catbox.moe/ha92wy.mp3" },
-      { id: 2, name: "Orhan Gazi", bio: "Bursa'yı fetheterek başkent yapmış, ilk Osmanlı parasını bastırmış ve düzenli orduyu kurmuştur.", img: "https://upload.wikimedia.org/wikipedia/commons/9/91/Orhan_I.jpg", audio: "https://files.catbox.moe/x3km0n.mp3" },
-      { id: 3, name: "I. Murad", bio: "Balkanlar'da geniş fetihler yapmış, I. Kosova Savaşı'nda zafer kazandıktan sonra şehit düşmüştür.", img: "https://upload.wikimedia.org/wikipedia/commons/0/07/Murad_I.jpg", audio: "https://files.catbox.moe/qasi7n.mp3" },
-      { id: 4, name: "I. Bayezid (Yıldırım)", bio: "Hızlı hareket etmesiyle Yıldırım unvanını almış, Niğbolu Zaferi'ni kazanmış ve İstanbul'u kuşatmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Bayezid_I.jpg", audio: "https://files.catbox.moe/5fuq5j.mp3" },
-      { id: 5, name: "I. Mehmed (Çelebi)", bio: "Fetret Devri'ne son vererek devleti yeniden toparladığı için Osmanlı'nın ikinci kurucusu kabul edilir.", img: "https://upload.wikimedia.org/wikipedia/commons/d/d1/Mehmed_I.jpg", audio: "https://files.catbox.moe/8har7h.mp3" },
-      { id: 6, name: "II. Murad", bio: "Varna ve II. Kosova zaferleriyle Balkanlar'daki Türk hakimiyetini kesinleştirmiştir. Fatih'in babasıdır.", img: "https://upload.wikimedia.org/wikipedia/commons/3/30/Murad_II.jpg", audio: "https://files.catbox.moe/gjd3yg.mp3" },
-      { id: 7, name: "II. Mehmed (Fatih)", bio: "1453'te İstanbul'u fethederek Doğu Roma İmparatorluğu'na son vermiş ve Çağ açıp Çağ kapatmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/c/c6/Mehmed_II_by_Gentile_Bellini.jpg", audio: "https://files.catbox.moe/bn8mfk.mp3" },
-      { id: 8, name: "II. Bayezid", bio: "Sofu unvanıyla anılır. İspanya'dan kaçan Yahudileri Osmanlı topraklarına kabul etmiştir.", img: "https://upload.wikimedia.org/wikipedia/commons/d/d8/Bayezid_II.jpg", audio: "https://files.catbox.moe/f8jofk.mp3" },
-      { id: 9, name: "I. Selim (Yavuz)", bio: "8 yıllık saltanatında devlet hazinesini doldurmuş, Çaldıran ve Mercidabık zaferleriyle halifeliği almıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/7/77/Yavuz_Sultan_Selim.jpg", audio: "https://files.catbox.moe/9x1le3.mp3" },
-      { id: 10, name: "I. Süleyman (Kanuni)", bio: "46 yıl ile en uzun süre tahtta kalan padişahtır. Osmanlı İmparatorluğu'nu zirveye taşımıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Suleiman_the_Magnificent.jpg", audio: "https://files.catbox.moe/49ksw3.mp3" },
-      { id: 11, name: "II. Selim", bio: "Sarı Selim olarak bilinir. Kıbrıs onun döneminde fethedilmiş, İnebahtı Deniz Savaşı yaşanmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/f/f1/Selim_II.jpg", audio: "https://files.catbox.moe/onln42.mp3" },
-      { id: 12, name: "III. Murad", bio: "İmparatorluk doğuda ve batıda en geniş sınırlarına onun döneminde ulaşmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/c/c5/Murad_III.jpg", audio: "https://files.catbox.moe/auk4hb.mp3" },
-      { id: 13, name: "III. Mehmed", bio: "Eğri Fatihi olarak bilinir. Haçova Meydan Muharebesi'nde büyük bir zafer kazanmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Mehmed_III.jpg", audio: "https://files.catbox.moe/sr2xb1.mp3" },
-      { id: 14, name: "I. Ahmed", bio: "Ekber ve Erşed sistemini getirmiş, İstanbul'daki meşhur Sultanahmet Camii'ni yaptırmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Ahmed_I.jpg", audio: "https://files.catbox.moe/wvx7jh.mp3" },
-      { id: 15, name: "I. Mustafa", bio: "Tahta iki kez çıkıp inen ilk padişahtır.", img: "https://upload.wikimedia.org/wikipedia/commons/2/23/Mustafa_I.jpg", audio: "https://files.catbox.moe/wubj66.mp3" },
-      { id: 16, name: "II. Osman (Genç Osman)", bio: "Yeniçeri Ocağı'nı kaldırmayı düşünen ilk padişahtır. Genç yaşta şehit edilmiştir.", img: "https://upload.wikimedia.org/wikipedia/commons/3/34/Osman_II.jpg", audio: "https://files.catbox.moe/qypenr.mp3" },
-      { id: 17, name: "IV. Murad", bio: "Bağdat Fatihi olarak bilinir. Sert tütün ve içki yasaklarıyla devlette disiplini yeniden sağlamıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/0/07/Murad_IV.jpg", audio: "https://files.catbox.moe/bzkl8h.mp3" },
-      { id: 18, name: "İbrahim", bio: "Sultan İbrahim döneminde Girit kuşatması başlatılmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/1/18/Sultan_Ibrahim.jpg", audio: "https://files.catbox.moe/u8ik6s.mp3" },
-      { id: 19, name: "IV. Mehmed", bio: "Avcı Mehmed olarak bilinir. En uzun süre tahtta kalan ikinci padişahtır. II. Viyana Kuşatması onun dönemindedir.", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/Mehmed_IV.jpg", audio: "https://files.catbox.moe/oae2ue.mp3" },
-      { id: 20, name: "II. Süleyman", bio: "Kutsal İttifak Savaşları döneminde tahta çıkmış ve iç düzeni sağlamaya çalışmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Suleiman_II.jpg", audio: "https://files.catbox.moe/7me1aq.mp3" },
-      { id: 21, name: "II. Ahmed", bio: "Saltanatı boyunca Avusturya üzerine seferler düzenlenmiştir.", img: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Ahmed_II.jpg", audio: "https://files.catbox.moe/uz1chc.mp3" },
-      { id: 22, name: "II. Mustafa", bio: "Karlofça Antlaşması onun döneminde imzalanmış ve ilk kez büyük çapta toprak kaybedilmiştir.", img: "https://upload.wikimedia.org/wikipedia/commons/d/da/Mustafa_II.jpg", audio: "https://files.catbox.moe/4c37x3.mp3" },
-      { id: 23, name: "III. Ahmed", bio: "Lale Devri padişahıdır. İlk Türk matbaası bu dönemde kurulmuştur.", img: "https://upload.wikimedia.org/wikipedia/commons/0/0a/Ahmed_III.jpg", audio: "https://files.catbox.moe/2bzk05.mp3" },
-      { id: 24, name: "I. Mahmud", bio: "Batı tarzı askeri ıslahatlara öncülük etmiş, Hendesehane'yi kurdurmuştur.", img: "https://upload.wikimedia.org/wikipedia/commons/8/8e/Mahmud_I.jpg", audio: "https://files.catbox.moe/fgfonx.mp3" },
-      { id: 25, name: "III. Osman", bio: "Şehzadelerin kafes hayatı yüzünden en uzun süre hapis kalan padişahtır.", img: "https://upload.wikimedia.org/wikipedia/commons/f/f6/Osman_III.jpg", audio: "https://files.catbox.moe/f62iat.mp3" },
-      { id: 26, name: "III. Mustafa", bio: "Mühendishane-i Bahr-i Hümayun'un temellerini atmış, mali reformlar yapmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/8/8b/Mustafa_III.jpg", audio: "https://files.catbox.moe/hik3dv.mp3" },
-      { id: 27, name: "I. Abdülhamid", bio: "Küçük Kaynarca Antlaşması sonrası devlette düzeni sağlamaya çalışmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/1/14/Abdul_Hamid_I.jpg", audio: "https://files.catbox.moe/mk1fi5.mp3" },
-      { id: 28, name: "III. Selim", bio: "Nizam-ı Cedid ordusunu kurmuş ve büyük yenilik hareketleri başlatmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/1/16/Selim_III.jpg", audio: "https://files.catbox.moe/3ya8dq.mp3" },
-      { id: 29, name: "IV. Mustafa", bio: "Kabakçı Mustafa İsyanı sonrası kısa süre tahtta kalmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Mustafa_IV.jpg", audio: "https://files.catbox.moe/bujvp1.mp3" },
-      { id: 30, name: "II. Mahmud", bio: "Yeniçeri Ocağı'nı kaldırmış (Vaka-i Hayriye) ve modernleşme ıslahatlarını başlatmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/a/a2/Mahmud_II.jpg", audio: "https://files.catbox.moe/z8qkvh.mp3" },
-      { id: 31, name: "Abdülmecid", bio: "Tanzimat ve Islahat Fermanlarını ilan ettirerek batılılaşma sürecini hızlandırmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/3/30/Abdulmejid_I.jpg", audio: "https://files.catbox.moe/3ay45u.mp3" },
-      { id: 32, name: "Abdülaziz", bio: "Avrupa seyahatine çıkan ilk Osmanlı padişahıdır. Donanmayı güçlendirmiştir.", img: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Abdulaziz_portrait.jpg", audio: "https://files.catbox.moe/8y66tp.mp3" },
-      { id: 33, name: "V. Murad", bio: "93 gün ile Osmanlı tarihinde en kısa süre tahtta kalan padişahtır.", img: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Murad_V.jpg", audio: "https://files.catbox.moe/ktaz9o.mp3" },
-      { id: 34, name: "II. Abdülhamid", bio: "I. Meşrutiyet'i ilan etmiş, Kanun-ı Esasi'yi yürürlüğe koymuş ve demiryolları projesini yürütmüştür.", img: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Abdul_Hamid_II.jpg", audio: "https://files.catbox.moe/wl82h0.mp3" },
-      { id: 35, name: "V. Mehmed (Reşad)", bio: "I. Dünya Savaşı döneminin padişahıdır. Çanakkale Zaferi bu dönemde kazanılmıştır.", img: "https://upload.wikimedia.org/wikipedia/commons/a/a3/Mehmed_V.jpg", audio: "https://files.catbox.moe/lucree.mp3" },
-      { id: 36, name: "VI. Mehmed (Vahdeddin)", bio: "Osmanlı İmparatorluğu'nun son padişahıdır. 1922'de saltanatın kaldırılmasıyla tahttan inmiştir.", img: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Mehmed_VI.jpg", audio: "https://files.catbox.moe/j6pxp2.mp3" }
-    ];
-
-    let currentAudio = null;
-    let activeCard = null;
-
-    const container = document.getElementById("padisah-container");
-    const playerModal = document.getElementById("playerModal");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalBio = document.getElementById("modalBio");
-    const togglePlayBtn = document.getElementById("togglePlayBtn");
-    const restartBtn = document.getElementById("restartBtn");
-    const btnIcon = document.getElementById("btnIcon");
-    const btnText = document.getElementById("btnText");
-    const statusText = document.getElementById("statusText");
-    const closeModalBtn = document.getElementById("closeModalBtn");
-
-    padisahlar.forEach(p => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <span class="num-badge">${p.id}. Padişah</span>
-        <div class="img-frame">
-          <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x250?text=Gorsel+Yuklenemedi'">
+    <!-- Arama ve Dönem Filtreleme Paneli -->
+    <div class="filter-section">
+        <input type="text" id="searchInput" class="search-box" placeholder="Padişah adı ile ara..." oninput="filterSultans()">
+        <div class="era-filters">
+            <button class="era-btn active" onclick="setEraFilter('all', this)">Tümü</button>
+            <button class="era-btn" onclick="setEraFilter('kurulus', this)">Kuruluş</button>
+            <button class="era-btn" onclick="setEraFilter('yukselme', this)">Yükselme</button>
+            <button class="era-btn" onclick="setEraFilter('duraklama', this)">Duraklama</button>
+            <button class="era-btn" onclick="setEraFilter('gerileme', this)">Gerileme</button>
+            <button class="era-btn" onclick="setEraFilter('dagilma', this)">Dağılma</button>
         </div>
-        <h3>${p.name}</h3>
-        <div class="play-btn-text"><span>▶</span> Biyografi & Sesli Anlatım</div>
-      `;
+    </div>
 
-      card.addEventListener("click", () => {
-        if (activeCard === card && currentAudio) {
-          if (!currentAudio.paused) {
-            currentAudio.pause();
-            setPauseUI();
-            return;
-          } else {
-            playAudio();
-            return;
-          }
+    <div class="container" id="sultans-container">
+        <!-- Padişah kartları dinamik yüklenir -->
+    </div>
+
+    <div class="feedback-section">
+        <h3>Hata Bildir / Düzeltme Gönder</h3>
+        <form class="feedback-form" action="https://formspree.io/f/xlgppvye" method="POST">
+            <input type="email" name="email" placeholder="E-posta adresiniz" required>
+            <textarea name="message" rows="3" placeholder="Bildirmek istediğiniz hata veya öneri..." required></textarea>
+            <button type="submit">Doğrudan Gönder</button>
+        </form>
+    </div>
+
+    <footer>Bu Proje Yusuf Eren Beyoğlu Tarafından Hazırlanmıştır © 2026</footer>
+
+    <div id="audio-panel">
+        <div class="panel-content">
+            <button class="close-panel" onclick="closeAudioPanel()">&times;</button>
+            <div class="panel-title" id="panel-sultan-name">Padişah Adı</div>
+            <div class="panel-bio" id="panel-sultan-bio">Biyografi metni</div>
+            <div class="panel-controls">
+                <button class="control-btn btn-pause" id="pause-play-btn" onclick="togglePlayPause()">DURDUR</button>
+                <button class="control-btn btn-replay" onclick="replayAudio()">TEKRAR OYNAT</button>
+            </div>
+            <div class="status-text" id="audio-status">SESLİ ANLATIM ÇALINIYOR...</div>
+        </div>
+    </div>
+
+    <script>
+        const sultans = [
+            { id: 1, name: "OSMAN GAZİ", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Osman_Gazi2.jpg/800px-Osman_Gazi2.jpg", bio: "Ben Osman Gazi! Kayı boyunun beyi Ertuğrul Gazi'nin oğluyum. 1299 yılında Söğüt ve Domaniç uç bölgesinde, çağlar kapatıp açacak olan Osmanlı Cihan Devleti'nin temellerini attım. Şeyh Edebali'nin 'İnsanı yaşat ki devlet yaşasın' buyruğunu devletimin temel ilkesi yaptım. Yarhisar, Bilecik, İnegöl ve Yenişehir'i fethederek beyliğimi bağımsız bir devlet haline getirdim." },
+            { id: 2, name: "ORHAN GAZİ", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Orhan_Gazi.jpg/800px-Orhan_Gazi.jpg", bio: "Ben Orhan Gazi! Babam Osman Bey'den aldığım aşiret mirasını kurumsallaşmış bir devlete dönüştürdüm. 1326'da Bursa'yı fethedip devletimizin ilk büyük başkenti yaptım. İlk Osmanlı gümüş akçesini bastırdım, Yaya ve Müsellem adıyla ilk düzenli orduyu kurdum ve Çimpe Kalesi'ni alarak Rumeli'ye ilk Türk adımını attım." },
+            { id: 3, name: "I. MURAD (HÜDAVENDİGÂR)", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Murat_H%C3%BCdavendigar.jpg/800px-Murat_H%C3%BCdavendigar.jpg", bio: "Ben Sultan I. Murad Hüdavendigâr! Edirne'yi fethedip devletin başkentini Rumeli'ye taşıdım. Devşirme sistemini kurarak Osmanlı ordusunun göz bebeği olan Yeniçeri Ocağı'nı faaliyete geçirdim. Sırpsındığı ve Çirmen savaşlarında Haçlı ordularını dize getirdim. I. Kosova Meydan Muharebesi'nde büyük bir zafer kazandıktan sonra şehit düştüm." },
+            { id: 4, name: "YILDIRIM BAYEZİD", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Y%C4%B1ld%C4%B1r%C4%B1mBayezit4.jpg/800px-Y%C4%B1ld%C4%B1r%C4%B1mBayezit4.jpg", bio: "Ben Yıldırım Bayezid! Savaş meydanlarında ordularımla gösterdiğim inanılmaz sürat sebebiyle Yıldırım lakabını aldım. Niğbolu Kalesi önünde Avrupa'nın dev Haçlı ordusunu yok ettim. Anadolu Türk birliğini sağladım ve İstanbul'u kuşatan ilk Osmanlı padişahı oldum." },
+            { id: 5, name: "I. MEHMED (ÇELEBİ MEHMED)", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/%C3%87elebi_Mehmet.jpg/800px-%C3%87elebi_Mehmet.jpg", bio: "Ben Çelebi Mehmed! Ankara Savaşı sonrasında yaşanan 11 yıllık kanlı Fetret Devri kargaşasına son verip devleti çöküşün eşiğinden kurtardım. Osmanlı Devleti'ni yeniden bir araya getirdiğim için ikinci kurucu olarak anılırım." },
+            { id: 6, name: "II. MURAD", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/II._Murat.jpg/800px-II._Murat.jpg", bio: "Ben II. Murad! Balkanlar'da Osmanlı hakimiyetini perçinledim. Varna ve II. Kosova zaferleriyle Haçlıların Türkleri Balkanlar'dan atma ümidini yok ettim. Tahtı kendi isteğimle oğlum Mehmed'e bıraktıysam da tekrar tahta geçip ordunun başına döndüm." },
+            { id: 7, name: "II. MEHMED (FATİH SULTAN MEHMED)", era: "yukselme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Bellini%2C_Gentile_-_Sultan_Mehmet_II.jpg/800px-Bellini%2C_Gentile_-_Sultan_Mehmet_II.jpg", bio: "Ben Fatih Sultan Mehmed Han! Konstantiniyye'yi fethedip aleme nizam veren Cihangir padişahım. Akşemseddin ve Molla Gürani gibi alimlerin rahlesinde yetiştim; Türkçe hariç Arapça, Farsça, Latince, Yunanca, İbranice ve Sırpça olmak üzere 6 dil öğrendim. 21 yaşındayken 'Ya ben İstanbul'u alırım ya İstanbul beni' diyerek yola çıktım. Boğaz'ı kapatmak için Rumeli Hisarı'nı inşa ettirdim. Şahi adı verilen devasa sur yıkan topları bizzat çizip döktürdüm. 72 parça donanmayı bir gecede karadan Haliç'e indirdim. 29 Mayıs 1453 sabahı 1100 yıllık Doğu Roma İmparatorluğu'nu tarihe gömdüm. Bin yıllık Orta Çağ'ı kapatıp Yeni Çağ'ı başlattım. Kayser-i Rûm unvanını alarak İstanbul'u İslam'ın kalbi yaptım. Kanunname-i Âl-i Osman'ı kaleme alarak devletimi cihanşümul bir imparatorluk haline getirdim." },
+            { id: 8, name: "II. BAYEZİD", era: "yukselme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Sultan_II._Bayezit.JPG/800px-Sultan_II._Bayezit.JPG", bio: "Ben II. Bayezid! Dindarlığım ve adaletim sebebiyle Sofi ve Veli unvanlarıyla anıldım. İspanya'daki Engizisyon zulmünden kaçan binlerce Müslüman ve Yahudi'yi Osmanlı donanmasıyla kurtarıp topraklarımıza getirdim." },
+            { id: 9, name: "I. SELİM (YAVUZ SULTAN SELİM)", era: "yukselme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Yavuz_Sultan_I._Selim_Han.jpg/800px-Yavuz_Sultan_I._Selim_Han.jpg", bio: "Ben Yavuz Sultan Selim! Sadece 8 yıl süren saltanatıma 80 yıllık fetih sığdırdım. Çaldıran zaferiyle Safevi tehlikesini önledim, Mercidabık ve Ridaniye zaferleriyle Mısır'ı fethettim. Mukaddes Emanetleri İstanbul'a getirerek ilk Osmanlı Halifesi oldum." },
+            { id: 10, name: "I. SÜLEYMAN (KANUNİ SULTAN SÜLEYMAN)", era: "yukselme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/EmperorSuleiman.jpg/800px-EmperorSuleiman.jpg", bio: "Ben Kanuni Sultan Süleyman! 46 yıl boyunca adaletle hükmettiğim muhteşem tahtımda, İmparatorluğu 3 kıtaya ulaştırdım. Mohaç Meydan Muharebesi'ni 2 saatte kazandım. Barbaros Hayreddin Paşa ile Akdeniz'i bir Türk gölü haline getirdik." },
+            { id: 11, name: "II. SELİM (SARI SELİM)", era: "yukselme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/II._Selim_Han.jpg/800px-II._Selim_Han.jpg", bio: "Ben II. Selim! Dönemimde Kıbrıs adası fethedildi. Mimar Sinan, başyapıtı kabul edilen Selimiye Camii'ni benim dönemimde Edirne'de inşa etti." },
+            { id: 12, name: "III. MURAD", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/III._Murat_Han.jpg/800px-III._Murat_Han.jpg", bio: "Ben III. Murad! Ferhat Paşa Antlaşması ile doğuda Hazar Denizi'ne ulaşarak Osmanlı Devleti'nin doğudaki en geniş sınırlarını çizdim." },
+            { id: 13, name: "III. MEHMED", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Mehmed_III.jpg/800px-Mehmed_III.jpg", bio: "Ben III. Mehmed! Kanuni'den sonra ordunun başında sefere çıkan ilk padişahım. Haçova Meydan Muharebesi'ni kazanıp Eğri Fatihi unvanını aldım." },
+            { id: 14, name: "I. AHMED", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Sultan_I._Ahmet.jpg/800px-Sultan_I._Ahmet.jpg", bio: "Ben I. Ahmed! En yaşlı şehzadenin tahta geçmesini sağlayan Ekber ve Erşed sistemini getirdim. İstanbul'un simgesi olan Sultanahmet Camii'ni yaptırdım." },
+            { id: 15, name: "I. MUSTAFA", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Mustafa_1.jpg/800px-Mustafa_1.jpg", bio: "Ben I. Mustafa! Ekber ve Erşed sistemiyle tahta geçen ilk padişahım. İki kez tahta çıkarıldım." },
+            { id: 16, name: "II. OSMAN (GENÇ OSMAN)", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Osman_2.jpg/800px-Osman_2.jpg", bio: "Ben Genç Osman! Henüz 14 yaşında tahta çıktım. Yeniçeri Ocağı'nı kaldırmak ve devlette reform yapmak istediğim için isyan eden yeniçerilerce şehit edildim." },
+            { id: 17, name: "IV. MURAD", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/IV._Murat.jpg/800px-IV._Murat.jpg", bio: "Ben IV. Murad! Sert disiplinimle asayişi yeniden sağladım. Revan ve Bağdat seferlerine bizzat katılıp Bağdat Fatihi unvanını aldım." },
+            { id: 18, name: "SULTAN İBRAHİM", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Ibrahim_I.jpg/800px-Ibrahim_I.jpg", bio: "Ben Sultan İbrahim! Dönemimde Akdeniz hâkimiyetimiz için kritik olan 24 yıllık çetin Girit Kuşatması başlatıldı." },
+            { id: 19, name: "IV. MEHMED (AVCI MEHMED)", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Sultan_Mehmed_IV_%282%29.jpg/800px-Sultan_Mehmed_IV_%282%29.jpg", bio: "Ben IV. Mehmed! 6 yaşındayken tahta oturdum ve 39 yıl kaldım. Av tutkum sebebiyle Avcı Mehmed olarak anıldım." },
+            { id: 20, name: "II. SÜLEYMAN", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/S%C3%BCleyman_II.jpg/800px-Süleyman_II.jpg", bio: "Ben II. Süleyman! Sadrazamlığa getirdiğim Köprülü Fazıl Mustafa Paşa sayesinde askeri ve mali alanda toparlanma sağladık." },
+            { id: 21, name: "II. AHMED", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Ahmet_II.jpg/800px-Ahmet_II.jpg", bio: "Ben II. Ahmed! Kutsal İttifak devletleriyle yapılan ağır savaşlar döneminde tahtta kaldım." },
+            { id: 22, name: "II. MUSTAFA", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/II._Mustafa.jpg/800px-II._Mustafa.jpg", bio: "Ben II. Mustafa! 1699 Karlofça Antlaşması ile Batı'da ilk kez büyük çapta toprak kaybettik." },
+            { id: 23, name: "III. AHMET", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/III._Ahmet.jpg/800px-III._Ahmet.jpg", bio: "Ben III. Ahmed! Lale Devri padişahıyım. İbrahim Müteferrika ile ilk Türk matbaasını kurduk." },
+            { id: 24, name: "I. MAHMUD", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Mahmud1.jpg/800px-Mahmud1.jpg", bio: "Ben I. Mahmud! Hendesehane'yi kurdum. 1739 Belgrat Antlaşması ile büyük bir zafer kazandım." },
+            { id: 25, name: "III. OSMAN", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/OsmanIII.jpg/800px-OsmanIII.jpg", bio: "Ben III. Osman! Nuruosmaniye Camii'ni tamamlatarak ibadete açtım." },
+            { id: 26, name: "III. MUSTAFA", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Mustafa3.jpg/800px-Mustafa3.jpg", bio: "Ben III. Mustafa! Deniz Mühendishanesi'ni kurarak modern deniz subayları yetiştirilmesini sağladım." },
+            { id: 27, name: "I. ABDÜLHAMİD", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Abdulhamid_I.jpg/800px-Abdulhamid_I.jpg", bio: "Ben I. Abdülhamid! Askeri reformlara hız verip İstihkam Okulu'nu açtım." },
+            { id: 28, name: "III. SELİM", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Joseph_Warnia-Zarzecki_-_Sultan_Selim_III_-_Google_Art_Project.jpg/800px-Joseph_Warnia-Zarzecki_-_Sultan_Selim_III_-_Google_Art_Project.jpg", bio: "Ben III. Selim! Batı tarzında köklü yenilikler içeren Nizam-ı Cedid hareketini ve yeni orduyu kurdum." },
+            { id: 29, name: "IV. MUSTAFA", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/IV._Mustafa.jpg/800px-IV._Mustafa.jpg", bio: "Ben IV. Mustafa! Kabakçı Mustafa İsyanı sonrasında tahta çıkarıldım." },
+            { id: 30, name: "II. MAHMUD", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Athanasios_Karantz%28ou%29las_-_Sultan_Mahmud_II_-_Google_Art_Project.jpg/800px-Athanasios_Karantz%28ou%29las_-_Sultan_Mahmud_II_-_Google_Art_Project.jpg", bio: "Ben II. Mahmud! 1826'da Yeniçeri Ocağı'nı kaldırdım. Kıyafet devrimi yaptım, fes ve ceket getirdim." },
+            { id: 31, name: "SULTAN ABDÜLMECİD", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Sultan_Abd%C3%BClmecid_-_Google_Art_Project.jpg/800px-Sultan_Abd%C3%BClmecid_-_Google_Art_Project.jpg", bio: "Ben Sultan Abdülmecid! Tanzimat ve Islahat Fermanı'nı ilan ettirdim. Dolmabahçe Sarayı'nı inşa ettirdim." },
+            { id: 32, name: "SULTAN ABDÜLAZİZ", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Abdulaziz.jpg/800px-Abdulaziz.jpg", bio: "Ben Sultan Abdülaziz! Avrupa devletlerine resmi ziyarette bulunan ilk Osmanlı padişahıyım. Güçlü bir zırhlı donanma kurdum." },
+            { id: 33, name: "V. MURAD", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Portrait_of_Murad_V.jpg/800px-Portrait_of_Murad_V.jpg", bio: "Ben V. Murad! 93 gün ile tahtta en kısa süre kalan padişahım." },
+            { id: 34, name: "II. ABDÜLHAMİD", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Abdul_Hamid_II_in_Balmoral_Castle_in_1867-colored.jpg/800px-Abdul_Hamid_II_in_Balmoral_Castle_in_1867-colored.jpg", bio: "Ben II. Abdülhamid! Meşrutiyet'i ilan ettim. Hicaz Demiryolu'nu yaptırdım, binlerce okul ve hastane kurdum." },
+            { id: 35, name: "V. MEHMED REŞAD", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/SultanmehmedV1917.jpg/800px-SultanmehmedV1917.jpg", bio: "Ben V. Mehmed Reşad! Saltanatım boyunca Balkan Savaşları ve Çanakkale Zaferi'nin yaşandığı I. Dünya Savaşını gördüm." },
+            { id: 36, name: "VI. MEHMED VAHİDEDDİN", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Sultan_Mehmed_VI.jpg/800px-Sultan_Mehmed_VI.jpg", bio: "Ben VI. Mehmed Vahideddin! Osmanlı'nın son padişahıyım." }
+        ];
+
+        let currentActiveId = null;
+        let syntheticAudioUtterance = null;
+        let currentEraFilter = 'all';
+
+        function renderSultans() {
+            const container = document.getElementById('sultans-container');
+            const searchVal = document.getElementById('searchInput').value.toLowerCase().tr();
+            container.innerHTML = "";
+
+            const filtered = sultans.filter(sultan => {
+                const matchesEra = (currentEraFilter === 'all' || sultan.era === currentEraFilter);
+                const matchesSearch = sultan.name.toLowerCase().tr().includes(searchVal);
+                return matchesEra && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding: 40px; color: #888;">Aradığınız kriterlere uygun padişah bulunamadı.</div>`;
+                return;
+            }
+
+            filtered.forEach(sultan => {
+                const card = document.createElement('div');
+                card.className = 'sultan-card';
+                card.innerHTML = `
+                    <div class="sultan-header">${sultan.id}. PADİŞAH</div>
+                    <div class="image-container">
+                        <img src="${sultan.img}" alt="${sultan.name}" loading="lazy" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'">
+                    </div>
+                    <div class="sultan-name">${sultan.name}</div>
+                    <div class="sultan-quote-preview">“${sultan.bio}”</div>
+                    <button class="play-btn" onclick="playSultanAudio(${sultan.id})">▶ Biyografi & Sesli Anlatım</button>
+                `;
+                container.appendChild(card);
+            });
         }
 
-        if (activeCard) activeCard.classList.remove("active");
-        activeCard = card;
-        activeCard.classList.add("active");
-
-        modalTitle.innerText = `${p.id}. ${p.name}`;
-        modalBio.innerText = p.bio;
-        playerModal.classList.add("open");
-
-        if (currentAudio) {
-          currentAudio.pause();
-          currentAudio.currentTime = 0;
-        }
-
-        currentAudio = new Audio(p.audio);
-        playAudio();
-
-        currentAudio.onended = () => {
-          setPauseUI();
-          statusText.innerText = "Sesli anlatım bitti.";
+        String.prototype.tr = function () {
+            return this.replace(/İ/g, "i").replace(/I/g, "ı").replace(/Ğ/g, "ğ").replace(/Ü/g, "ü").replace(/Ş/g, "ş").replace(/Ö/g, "ö").replace(/Ç/g, "ç");
         };
-      });
 
-      container.appendChild(card);
-    });
+        function filterSultans() {
+            renderSultans();
+        }
 
-    function playAudio() {
-      if (!currentAudio) return;
-      currentAudio.play().then(() => {
-        setPlayUI();
-      }).catch(err => {
-        console.log("Ses hatası:", err);
-        setPauseUI();
-      });
-    }
+        function setEraFilter(era, btnElement) {
+            currentEraFilter = era;
+            document.querySelectorAll('.era-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+            renderSultans();
+        }
 
-    function pauseAudio() {
-      if (currentAudio) {
-        currentAudio.pause();
-        setPauseUI();
-      }
-    }
+        function playSultanAudio(id) {
+            const sultan = sultans.find(s => s.id === id);
+            if (!sultan) return;
 
-    function setPlayUI() {
-      btnIcon.innerText = "⏹";
-      btnText.innerText = "Durdur";
-      statusText.innerText = "Sesli anlatım çalınıyor...";
-    }
+            currentActiveId = id;
 
-    function setPauseUI() {
-      btnIcon.innerText = "▶";
-      btnText.innerText = "Başlat";
-      statusText.innerText = "Durduruldu.";
-    }
+            document.getElementById('panel-sultan-name').innerText = `${sultan.id}. ${sultan.name}`;
+            document.getElementById('panel-sultan-bio').innerText = sultan.bio;
+            
+            document.getElementById('audio-panel').classList.add('active');
 
-    togglePlayBtn.addEventListener("click", () => {
-      if (!currentAudio) return;
-      if (currentAudio.paused) {
-        playAudio();
-      } else {
-        pauseAudio();
-      }
-    });
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                syntheticAudioUtterance = new SpeechSynthesisUtterance(sultan.bio);
+                syntheticAudioUtterance.lang = 'tr-TR';
+                syntheticAudioUtterance.rate = 0.95;
+                
+                syntheticAudioUtterance.onend = function() {
+                    document.getElementById('audio-status').innerText = "SESLİ ANLATIM TAMAMLANDI.";
+                    document.getElementById('pause-play-btn').innerText = "BAŞLAT";
+                };
 
-    restartBtn.addEventListener("click", () => {
-      if (!currentAudio) return;
-      currentAudio.currentTime = 0;
-      playAudio();
-    });
+                window.speechSynthesis.speak(syntheticAudioUtterance);
+                document.getElementById('audio-status').innerText = "SESLİ ANLATIM ÇALINIYOR...";
+                document.getElementById('pause-play-btn').innerText = "DURDUR";
+            }
+        }
 
-    closeModalBtn.addEventListener("click", () => {
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-      }
-      if (activeCard) activeCard.classList.remove("active");
-      playerModal.classList.remove("open");
-    });
+        function togglePlayPause() {
+            if (!('speechSynthesis' in window)) return;
 
-    const removeBadge = () => {
-      const badges = document.querySelectorAll('#tiiny-badge, [id*="tiiny"], [class*="tiiny"], a[href*="tiiny.host"], iframe[src*="tiiny"]');
-      badges.forEach(b => b.remove());
-    };
-    setInterval(removeBadge, 100);
-    window.addEventListener('DOMContentLoaded', removeBadge);
-  </script>
+            const btn = document.getElementById('pause-play-btn');
+            const status = document.getElementById('audio-status');
+
+            if (window.speechSynthesis.speaking) {
+                if (window.speechSynthesis.paused) {
+                    window.speechSynthesis.resume();
+                    btn.innerText = "DURDUR";
+                    status.innerText = "SESLİ ANLATIM ÇALINIYOR...";
+                } else {
+                    window.speechSynthesis.pause();
+                    btn.innerText = "DEVAM ET";
+                    status.innerText = "SESLİ ANLATIM DURDURULDU.";
+                }
+            } else if (currentActiveId !== null) {
+                playSultanAudio(currentActiveId);
+            }
+        }
+
+        function replayAudio() {
+            if (currentActiveId !== null) {
+                playSultan_Audio(currentActiveId);
+            }
+        }
+
+        function closeAudioPanel() {
+            document.getElementById('audio-panel').classList.remove('active');
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            currentActiveId = null;
+        }
+
+        window.onload = renderSultans;
+    </script>
 </body>
 </html>
