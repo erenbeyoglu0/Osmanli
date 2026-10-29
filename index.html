@@ -414,7 +414,7 @@
         <h3>Hata Bildir / Düzeltme Gönder</h3>
         <form class="feedback-form" onsubmit="sendEmail(event)">
             <textarea id="senderMessage" rows="4" placeholder="Bildirmek istediğiniz hata veya öneriyi buraya yazın..." required></textarea>
-            <button type="submit">Doğrudan E-Posta Gönder</button>
+            <button type="submit">Hata Bildir</button>
         </form>
     </div>
 
@@ -594,7 +594,7 @@
         function sendEmail(event) {
             event.preventDefault();
             const message = document.getElementById('senderMessage').value;
-            const mailtoLink = `mailto:beyoglueren7@gmail.com?subject=Osmanli%20Sitesi%20Hata%20Bildirimi&body=Ziyaretci%20Mesaji:%0A${encodeURIComponent(message)}`;
+            const mailtoLink = `mailto:beyoglueren7@gmail.com?subject=Osmanli%20Sitesi%20Hata%20Bildirimi&body=${encodeURIComponent(message)}`;
             window.location.href = mailtoLink;
         }
 
