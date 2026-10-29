@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Osmanlı Padişahları - Yusuf Eren Beyoğlu</title>
+    <!-- Osmanlı ve Tarih Temasına Uygun Şekilli Arayüz Fontu (Cinzel) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-gold: #d4af37;
@@ -16,7 +18,7 @@
         body {
             background-color: var(--dark-bg);
             color: var(--text-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cinzel', serif, Tahoma, sans-serif;
             margin: 0;
             padding: 0;
             padding-bottom: 140px;
@@ -31,18 +33,19 @@
 
         header h1 {
             color: var(--primary-gold);
-            font-size: 1.8rem;
+            font-size: 2rem;
             margin: 0;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-weight: 900;
         }
 
         header p {
             color: #aaa;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             margin-top: 8px;
+            letter-spacing: 0.5px;
         }
 
-        /* Arama ve Filtreleme Alanı */
         .filter-section {
             max-width: 600px;
             margin: 20px auto;
@@ -59,69 +62,104 @@
             border: 1px solid var(--primary-gold);
             border-radius: 25px;
             color: #fff;
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
             box-sizing: border-box;
             text-align: center;
+            font-family: 'Cinzel', serif;
         }
 
         .search-box::placeholder {
             color: #888;
         }
 
-        .era-filters {
+        .era-filters, .layout-filters {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             justify-content: center;
         }
 
-        .era-btn {
+        .era-btn, .layout-btn {
             background: #1a1a1a;
             color: #ccc;
             border: 1px solid #444;
             padding: 8px 14px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.2s ease;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.5px;
         }
 
-        .era-btn.active, .era-btn:hover {
+        .era-btn.active, .era-btn:hover, .layout-btn.active, .layout-btn:hover {
             background: var(--primary-gold);
             color: #000;
             border-color: var(--primary-gold);
             font-weight: bold;
         }
 
+        /* Konteyner ve Cihaz Duyarlı Düzen */
         .container {
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 0 15px;
+            display: grid;
+            gap: 20px;
+            transition: grid-template-columns 0.3s ease;
+        }
+
+        .container.cols-1 {
+            grid-template-columns: 1fr;
             max-width: 600px;
-            margin: 0 auto;
-            padding: 10px 20px 20px 20px;
+        }
+
+        .container.cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .container.cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @media (max-width: 900px) {
+            .container.cols-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container.cols-3, .container.cols-2 {
+                grid-template-columns: 1fr;
+                padding: 0 10px;
+            }
         }
 
         .sultan-card {
             background-color: var(--card-bg);
             border: 1px solid var(--primary-gold);
             border-radius: 12px;
-            margin-bottom: 30px;
             overflow: hidden;
             box-shadow: 0 8px 20px rgba(0,0,0,0.6);
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .sultan-header {
-            font-size: 1.1rem;
-            font-weight: bold;
+            font-size: 0.9rem;
+            font-weight: 700;
             color: var(--primary-gold);
-            padding: 15px;
+            padding: 12px;
             letter-spacing: 1px;
             border-bottom: 1px solid #222;
         }
 
         .image-container {
             width: 100%;
-            height: 380px;
+            aspect-ratio: 4 / 5; 
             overflow: hidden;
             background-color: #000;
             position: relative;
@@ -140,41 +178,53 @@
         }
 
         .sultan-name {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 20px 0 10px 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 12px 0 8px 0;
             color: #fff;
             letter-spacing: 0.5px;
         }
 
-        /* Metinleri dümdüz olmaktan çıkarıp şekilli, alıntılı ve şık bir karta dönüştüren stil */
         .sultan-quote-preview {
-            padding: 0 25px;
-            margin-bottom: 20px;
+            position: relative;
+            padding: 12px 15px;
+            margin: 10px 12px;
+            background: linear-gradient(145deg, #181818, #111111);
+            border: 2px solid var(--primary-gold);
+            border-radius: 8px;
             font-style: italic;
-            color: #d1d1d1;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            border-left: 3px solid var(--primary-gold);
-            text-align: left;
-            background: rgba(212, 175, 55, 0.03);
-            padding: 12px 15px 12px 20px;
-            border-radius: 0 8px 8px 0;
-            margin: 15px 20px 20px 20px;
+            color: #f3e5ab;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            text-align: center;
+            box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.08), 0 4px 10px rgba(0,0,0,0.5);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            flex-grow: 1;
+        }
+
+        .sultan-quote-preview::before {
+            content: '❦ ❦ ❦';
+            display: block;
+            color: var(--primary-gold);
+            font-size: 0.7rem;
+            margin-bottom: 6px;
+            letter-spacing: 3px;
         }
 
         .play-btn {
             background: linear-gradient(135deg, #d4af37, #aa8c2c);
             color: #000;
             border: none;
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 30px;
+            padding: 10px 16px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 25px;
             cursor: pointer;
-            margin-bottom: 25px;
+            margin: 0 12px 15px 12px;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.5px;
         }
 
         .play-btn:active {
@@ -225,19 +275,20 @@
 
         .panel-title {
             color: var(--primary-gold);
-            font-size: 1.1rem;
-            font-weight: bold;
+            font-size: 1rem;
+            font-weight: 700;
             margin-bottom: 6px;
         }
 
         .panel-bio {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #ddd;
             line-height: 1.5;
             margin-bottom: 12px;
             max-height: 90px;
             overflow-y: auto;
             font-style: italic;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
         }
 
         .panel-controls {
@@ -249,10 +300,11 @@
             flex: 1;
             padding: 10px;
             border-radius: 6px;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
             border: 1px solid var(--primary-gold);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            font-family: 'Cinzel', serif;
         }
 
         .btn-pause {
@@ -266,10 +318,11 @@
         }
 
         .status-text {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #888;
             margin-top: 5px;
             text-align: center;
+            letter-spacing: 0.5px;
         }
 
         .feedback-section {
@@ -284,7 +337,7 @@
 
         .feedback-section h3 {
             color: var(--primary-gold);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-top: 0;
             text-align: center;
         }
@@ -307,20 +360,22 @@
             color: #000;
             border: none;
             padding: 10px;
-            font-weight: bold;
+            font-weight: 700;
             border-radius: 6px;
             cursor: pointer;
+            font-family: 'Cinzel', serif;
         }
 
         footer {
             text-align: center;
             padding: 25px;
             color: var(--primary-gold);
-            font-weight: bold;
-            font-size: 0.95rem;
+            font-weight: 700;
+            font-size: 0.85rem;
             border-top: 1px solid #222;
             margin-top: 40px;
             background-color: #0d0d0d;
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -331,9 +386,10 @@
         <p>36 Osmanlı Padişahı Kendi Ağzından Biyografilerini Anlatıyor</p>
     </header>
 
-    <!-- Arama ve Dönem Filtreleme Paneli -->
     <div class="filter-section">
         <input type="text" id="searchInput" class="search-box" placeholder="Padişah adı ile ara..." oninput="filterSultans()">
+        
+        <!-- Dönem Filtreleri -->
         <div class="era-filters">
             <button class="era-btn active" onclick="setEraFilter('all', this)">Tümü</button>
             <button class="era-btn" onclick="setEraFilter('kurulus', this)">Kuruluş</button>
@@ -342,11 +398,17 @@
             <button class="era-btn" onclick="setEraFilter('gerileme', this)">Gerileme</button>
             <button class="era-btn" onclick="setEraFilter('dagilma', this)">Dağılma</button>
         </div>
+
+        <!-- Sütun / Sıra Seçim Butonları -->
+        <div class="layout-filters">
+            <span style="color:#aaa; font-size:0.8rem; align-self:center; font-family:'Cinzel', serif;">Görünüm:</span>
+            <button class="layout-btn" onclick="setColumns(1, this)">1 Sıra</button>
+            <button class="layout-btn" onclick="setColumns(2, this)">2 Sıra</button>
+            <button class="layout-btn active" onclick="setColumns(3, this)">3 Sıra</button>
+        </div>
     </div>
 
-    <div class="container" id="sultans-container">
-        <!-- Padişah kartları dinamik yüklenir -->
-    </div>
+    <div class="container cols-3" id="sultans-container"></div>
 
     <div class="feedback-section">
         <h3>Hata Bildir / Düzeltme Gönder</h3>
@@ -374,46 +436,46 @@
 
     <script>
         const sultans = [
-            { id: 1, name: "OSMAN GAZİ", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Osman_Gazi2.jpg/800px-Osman_Gazi2.jpg", bio: "Ben Osman Gazi! Kayı boyunun beyi Ertuğrul Gazi'nin oğluyum. 1299 yılında Söğüt ve Domaniç uç bölgesinde, çağlar kapatıp açacak olan Osmanlı Cihan Devleti'nin temellerini attım. Şeyh Edebali'nin 'İnsanı yaşat ki devlet yaşasın' buyruğunu devletimin temel ilkesi yaptım. Yarhisar, Bilecik, İnegöl ve Yenişehir'i fethederek beyliğimi bağımsız bir devlet haline getirdim." },
-            { id: 2, name: "ORHAN GAZİ", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Orhan_Gazi.jpg/800px-Orhan_Gazi.jpg", bio: "Ben Orhan Gazi! Babam Osman Bey'den aldığım aşiret mirasını kurumsallaşmış bir devlete dönüştürdüm. 1326'da Bursa'yı fethedip devletimizin ilk büyük başkenti yaptım. İlk Osmanlı gümüş akçesini bastırdım, Yaya ve Müsellem adıyla ilk düzenli orduyu kurdum ve Çimpe Kalesi'ni alarak Rumeli'ye ilk Türk adımını attım." },
-            { id: 3, name: "I. MURAD (HÜDAVENDİGÂR)", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Murat_H%C3%BCdavendigar.jpg/800px-Murat_H%C3%BCdavendigar.jpg", bio: "Ben Sultan I. Murad Hüdavendigâr! Edirne'yi fethedip devletin başkentini Rumeli'ye taşıdım. Devşirme sistemini kurarak Osmanlı ordusunun göz bebeği olan Yeniçeri Ocağı'nı faaliyete geçirdim. Sırpsındığı ve Çirmen savaşlarında Haçlı ordularını dize getirdim. I. Kosova Meydan Muharebesi'nde büyük bir zafer kazandıktan sonra şehit düştüm." },
-            { id: 4, name: "YILDIRIM BAYEZİD", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Y%C4%B1ld%C4%B1r%C4%B1mBayezit4.jpg/800px-Y%C4%B1ld%C4%B1r%C4%B1mBayezit4.jpg", bio: "Ben Yıldırım Bayezid! Savaş meydanlarında ordularımla gösterdiğim inanılmaz sürat sebebiyle Yıldırım lakabını aldım. Niğbolu Kalesi önünde Avrupa'nın dev Haçlı ordusunu yok ettim. Anadolu Türk birliğini sağladım ve İstanbul'u kuşatan ilk Osmanlı padişahı oldum." },
-            { id: 5, name: "I. MEHMED (ÇELEBİ MEHMED)", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/%C3%87elebi_Mehmet.jpg/800px-%C3%87elebi_Mehmet.jpg", bio: "Ben Çelebi Mehmed! Ankara Savaşı sonrasında yaşanan 11 yıllık kanlı Fetret Devri kargaşasına son verip devleti çöküşün eşiğinden kurtardım. Osmanlı Devleti'ni yeniden bir araya getirdiğim için ikinci kurucu olarak anılırım." },
-            { id: 6, name: "II. MURAD", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/II._Murat.jpg/800px-II._Murat.jpg", bio: "Ben II. Murad! Balkanlar'da Osmanlı hakimiyetini perçinledim. Varna ve II. Kosova zaferleriyle Haçlıların Türkleri Balkanlar'dan atma ümidini yok ettim. Tahtı kendi isteğimle oğlum Mehmed'e bıraktıysam da tekrar tahta geçip ordunun başına döndüm." },
-            { id: 7, name: "II. MEHMED (FATİH SULTAN MEHMED)", era: "yukselme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Bellini%2C_Gentile_-_Sultan_Mehmet_II.jpg/800px-Bellini%2C_Gentile_-_Sultan_Mehmet_II.jpg", bio: "Ben Fatih Sultan Mehmed Han! Konstantiniyye'yi fethedip aleme nizam veren Cihangir padişahım. Akşemseddin ve Molla Gürani gibi alimlerin rahlesinde yetiştim; Türkçe hariç Arapça, Farsça, Latince, Yunanca, İbranice ve Sırpça olmak üzere 6 dil öğrendim. 21 yaşındayken 'Ya ben İstanbul'u alırım ya İstanbul beni' diyerek yola çıktım. Boğaz'ı kapatmak için Rumeli Hisarı'nı inşa ettirdim. Şahi adı verilen devasa sur yıkan topları bizzat çizip döktürdüm. 72 parça donanmayı bir gecede karadan Haliç'e indirdim. 29 Mayıs 1453 sabahı 1100 yıllık Doğu Roma İmparatorluğu'nu tarihe gömdüm. Bin yıllık Orta Çağ'ı kapatıp Yeni Çağ'ı başlattım. Kayser-i Rûm unvanını alarak İstanbul'u İslam'ın kalbi yaptım. Kanunname-i Âl-i Osman'ı kaleme alarak devletimi cihanşümul bir imparatorluk haline getirdim." },
-            { id: 8, name: "II. BAYEZİD", era: "yukselme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Sultan_II._Bayezit.JPG/800px-Sultan_II._Bayezit.JPG", bio: "Ben II. Bayezid! Dindarlığım ve adaletim sebebiyle Sofi ve Veli unvanlarıyla anıldım. İspanya'daki Engizisyon zulmünden kaçan binlerce Müslüman ve Yahudi'yi Osmanlı donanmasıyla kurtarıp topraklarımıza getirdim." },
-            { id: 9, name: "I. SELİM (YAVUZ SULTAN SELİM)", era: "yukselme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Yavuz_Sultan_I._Selim_Han.jpg/800px-Yavuz_Sultan_I._Selim_Han.jpg", bio: "Ben Yavuz Sultan Selim! Sadece 8 yıl süren saltanatıma 80 yıllık fetih sığdırdım. Çaldıran zaferiyle Safevi tehlikesini önledim, Mercidabık ve Ridaniye zaferleriyle Mısır'ı fethettim. Mukaddes Emanetleri İstanbul'a getirerek ilk Osmanlı Halifesi oldum." },
-            { id: 10, name: "I. SÜLEYMAN (KANUNİ SULTAN SÜLEYMAN)", era: "yukselme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/EmperorSuleiman.jpg/800px-EmperorSuleiman.jpg", bio: "Ben Kanuni Sultan Süleyman! 46 yıl boyunca adaletle hükmettiğim muhteşem tahtımda, İmparatorluğu 3 kıtaya ulaştırdım. Mohaç Meydan Muharebesi'ni 2 saatte kazandım. Barbaros Hayreddin Paşa ile Akdeniz'i bir Türk gölü haline getirdik." },
-            { id: 11, name: "II. SELİM (SARI SELİM)", era: "yukselme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/II._Selim_Han.jpg/800px-II._Selim_Han.jpg", bio: "Ben II. Selim! Dönemimde Kıbrıs adası fethedildi. Mimar Sinan, başyapıtı kabul edilen Selimiye Camii'ni benim dönemimde Edirne'de inşa etti." },
-            { id: 12, name: "III. MURAD", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/III._Murat_Han.jpg/800px-III._Murat_Han.jpg", bio: "Ben III. Murad! Ferhat Paşa Antlaşması ile doğuda Hazar Denizi'ne ulaşarak Osmanlı Devleti'nin doğudaki en geniş sınırlarını çizdim." },
-            { id: 13, name: "III. MEHMED", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Mehmed_III.jpg/800px-Mehmed_III.jpg", bio: "Ben III. Mehmed! Kanuni'den sonra ordunun başında sefere çıkan ilk padişahım. Haçova Meydan Muharebesi'ni kazanıp Eğri Fatihi unvanını aldım." },
-            { id: 14, name: "I. AHMED", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Sultan_I._Ahmet.jpg/800px-Sultan_I._Ahmet.jpg", bio: "Ben I. Ahmed! En yaşlı şehzadenin tahta geçmesini sağlayan Ekber ve Erşed sistemini getirdim. İstanbul'un simgesi olan Sultanahmet Camii'ni yaptırdım." },
-            { id: 15, name: "I. MUSTAFA", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Mustafa_1.jpg/800px-Mustafa_1.jpg", bio: "Ben I. Mustafa! Ekber ve Erşed sistemiyle tahta geçen ilk padişahım. İki kez tahta çıkarıldım." },
-            { id: 16, name: "II. OSMAN (GENÇ OSMAN)", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Osman_2.jpg/800px-Osman_2.jpg", bio: "Ben Genç Osman! Henüz 14 yaşında tahta çıktım. Yeniçeri Ocağı'nı kaldırmak ve devlette reform yapmak istediğim için isyan eden yeniçerilerce şehit edildim." },
-            { id: 17, name: "IV. MURAD", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/IV._Murat.jpg/800px-IV._Murat.jpg", bio: "Ben IV. Murad! Sert disiplinimle asayişi yeniden sağladım. Revan ve Bağdat seferlerine bizzat katılıp Bağdat Fatihi unvanını aldım." },
-            { id: 18, name: "SULTAN İBRAHİM", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Ibrahim_I.jpg/800px-Ibrahim_I.jpg", bio: "Ben Sultan İbrahim! Dönemimde Akdeniz hâkimiyetimiz için kritik olan 24 yıllık çetin Girit Kuşatması başlatıldı." },
-            { id: 19, name: "IV. MEHMED (AVCI MEHMED)", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Sultan_Mehmed_IV_%282%29.jpg/800px-Sultan_Mehmed_IV_%282%29.jpg", bio: "Ben IV. Mehmed! 6 yaşındayken tahta oturdum ve 39 yıl kaldım. Av tutkum sebebiyle Avcı Mehmed olarak anıldım." },
-            { id: 20, name: "II. SÜLEYMAN", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/S%C3%BCleyman_II.jpg/800px-Süleyman_II.jpg", bio: "Ben II. Süleyman! Sadrazamlığa getirdiğim Köprülü Fazıl Mustafa Paşa sayesinde askeri ve mali alanda toparlanma sağladık." },
-            { id: 21, name: "II. AHMED", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Ahmet_II.jpg/800px-Ahmet_II.jpg", bio: "Ben II. Ahmed! Kutsal İttifak devletleriyle yapılan ağır savaşlar döneminde tahtta kaldım." },
-            { id: 22, name: "II. MUSTAFA", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/II._Mustafa.jpg/800px-II._Mustafa.jpg", bio: "Ben II. Mustafa! 1699 Karlofça Antlaşması ile Batı'da ilk kez büyük çapta toprak kaybettik." },
-            { id: 23, name: "III. AHMET", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/III._Ahmet.jpg/800px-III._Ahmet.jpg", bio: "Ben III. Ahmed! Lale Devri padişahıyım. İbrahim Müteferrika ile ilk Türk matbaasını kurduk." },
-            { id: 24, name: "I. MAHMUD", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Mahmud1.jpg/800px-Mahmud1.jpg", bio: "Ben I. Mahmud! Hendesehane'yi kurdum. 1739 Belgrat Antlaşması ile büyük bir zafer kazandım." },
-            { id: 25, name: "III. OSMAN", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/OsmanIII.jpg/800px-OsmanIII.jpg", bio: "Ben III. Osman! Nuruosmaniye Camii'ni tamamlatarak ibadete açtım." },
-            { id: 26, name: "III. MUSTAFA", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Mustafa3.jpg/800px-Mustafa3.jpg", bio: "Ben III. Mustafa! Deniz Mühendishanesi'ni kurarak modern deniz subayları yetiştirilmesini sağladım." },
-            { id: 27, name: "I. ABDÜLHAMİD", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Abdulhamid_I.jpg/800px-Abdulhamid_I.jpg", bio: "Ben I. Abdülhamid! Askeri reformlara hız verip İstihkam Okulu'nu açtım." },
-            { id: 28, name: "III. SELİM", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Joseph_Warnia-Zarzecki_-_Sultan_Selim_III_-_Google_Art_Project.jpg/800px-Joseph_Warnia-Zarzecki_-_Sultan_Selim_III_-_Google_Art_Project.jpg", bio: "Ben III. Selim! Batı tarzında köklü yenilikler içeren Nizam-ı Cedid hareketini ve yeni orduyu kurdum." },
-            { id: 29, name: "IV. MUSTAFA", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/IV._Mustafa.jpg/800px-IV._Mustafa.jpg", bio: "Ben IV. Mustafa! Kabakçı Mustafa İsyanı sonrasında tahta çıkarıldım." },
-            { id: 30, name: "II. MAHMUD", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Athanasios_Karantz%28ou%29las_-_Sultan_Mahmud_II_-_Google_Art_Project.jpg/800px-Athanasios_Karantz%28ou%29las_-_Sultan_Mahmud_II_-_Google_Art_Project.jpg", bio: "Ben II. Mahmud! 1826'da Yeniçeri Ocağı'nı kaldırdım. Kıyafet devrimi yaptım, fes ve ceket getirdim." },
-            { id: 31, name: "SULTAN ABDÜLMECİD", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Sultan_Abd%C3%BClmecid_-_Google_Art_Project.jpg/800px-Sultan_Abd%C3%BClmecid_-_Google_Art_Project.jpg", bio: "Ben Sultan Abdülmecid! Tanzimat ve Islahat Fermanı'nı ilan ettirdim. Dolmabahçe Sarayı'nı inşa ettirdim." },
-            { id: 32, name: "SULTAN ABDÜLAZİZ", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Abdulaziz.jpg/800px-Abdulaziz.jpg", bio: "Ben Sultan Abdülaziz! Avrupa devletlerine resmi ziyarette bulunan ilk Osmanlı padişahıyım. Güçlü bir zırhlı donanma kurdum." },
-            { id: 33, name: "V. MURAD", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Portrait_of_Murad_V.jpg/800px-Portrait_of_Murad_V.jpg", bio: "Ben V. Murad! 93 gün ile tahtta en kısa süre kalan padişahım." },
-            { id: 34, name: "II. ABDÜLHAMİD", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Abdul_Hamid_II_in_Balmoral_Castle_in_1867-colored.jpg/800px-Abdul_Hamid_II_in_Balmoral_Castle_in_1867-colored.jpg", bio: "Ben II. Abdülhamid! Meşrutiyet'i ilan ettim. Hicaz Demiryolu'nu yaptırdım, binlerce okul ve hastane kurdum." },
-            { id: 35, name: "V. MEHMED REŞAD", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/SultanmehmedV1917.jpg/800px-SultanmehmedV1917.jpg", bio: "Ben V. Mehmed Reşad! Saltanatım boyunca Balkan Savaşları ve Çanakkale Zaferi'nin yaşandığı I. Dünya Savaşını gördüm." },
-            { id: 36, name: "VI. MEHMED VAHİDEDDİN", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Sultan_Mehmed_VI.jpg/800px-Sultan_Mehmed_VI.jpg", bio: "Ben VI. Mehmed Vahideddin! Osmanlı'nın son padişahıyım." }
+            { id: 1, name: "OSMAN GAZİ", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Osman_Gazi2.jpg/800px-Osman_Gazi2.jpg", bio: "Ben Osman Gazi! Kayı boyunun beyi Ertuğrul Gazi'nin oğluyum. 1299 yılında Söğüt ve Domaniç uç bölgesinde, çağlar kapatıp açacak olan Osmanlı Cihan Devleti'nin temellerini attım. Şeyh Edebali'nin 'İnsanı yaşat ki devlet yaşasın' buyruğunu devletimin temel ilkesi yaptım. Yarhisar, Bilecik, İnegöl ve Yenişehir'i fethederek beyliğimi bağımsız bir devlet haline getirdim.", audio: "https://files.catbox.moe/ha92wy.mp3" },
+            { id: 2, name: "ORHAN GAZİ", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Orhan_Gazi.jpg/800px-Orhan_Gazi.jpg", bio: "Ben Orhan Gazi! Babam Osman Bey'den aldığım aşiret mirasını kurumsallaşmış bir devlete dönüştürdüm. 1326'da Bursa'yı fethedip devletimizin ilk büyük başkenti yaptım. İlk Osmanlı gümüş akçesini bastırdım, Yaya ve Müsellem adıyla ilk düzenli orduyu kurdum ve Çimpe Kalesi'ni alarak Rumeli'ye ilk Türk adımını attım.", audio: "https://files.catbox.moe/x3km0n.mp3" },
+            { id: 3, name: "I. MURAD (HÜDAVENDİGÂR)", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Murat_H%C3%BCdavendigar.jpg/800px-Murat_H%C3%BCdavendigar.jpg", bio: "Ben Sultan I. Murad Hüdavendigâr! Edirne'yi fethedip devletin başkentini Rumeli'ye taşıdım. Devşirme sistemini kurarak Osmanlı ordusunun göz bebeği olan Yeniçeri Ocağı'nı faaliyete geçirdim. Sırpsındığı ve Çirmen savaşlarında Haçlı ordularını dize getirdim. I. Kosova Meydan Muharebesi'nde büyük bir zafer kazandıktan sonra şehit düştüm.", audio: "https://files.catbox.moe/qasi7n.mp3" },
+            { id: 4, name: "YILDIRIM BAYEZİD", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Y%C4%B1ld%C4%B1r%C4%B1mBayezit4.jpg/800px-Y%C4%B1ld%C4%B1r%C4%B1mBayezit4.jpg", bio: "Ben Yıldırım Bayezid! Savaş meydanlarında ordularımla gösterdiğim inanılmaz sürat sebebiyle Yıldırım lakabını aldım. Niğbolu Kalesi önünde Avrupa'nın dev Haçlı ordusunu yok ettim. Anadolu Türk birliğini sağladım ve İstanbul'u kuşatan ilk Osmanlı padişahı oldum.", audio: "https://files.catbox.moe/5fuq5j.mp3" },
+            { id: 5, name: "I. MEHMED (ÇELEBİ MEHMED)", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/%C3%87elebi_Mehmet.jpg/800px-%C3%87elebi_Mehmet.jpg", bio: "Ben Çelebi Mehmed! Ankara Savaşı sonrasında yaşanan 11 yıllık kanlı Fetret Devri kargaşasına son verip devleti çöküşün eşiğinden kurtardım. Osmanlı Devleti'ni yeniden bir araya getirdiğim için ikinci kurucu olarak anılırım.", audio: "https://files.catbox.moe/8har7h.mp3" },
+            { id: 6, name: "II. MURAD", era: "kurulus", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/II._Murat.jpg/800px-II._Murat.jpg", bio: "Ben II. Murad! Balkanlar'da Osmanlı hakimiyetini perçinledim. Varna ve II. Kosova zaferleriyle Haçlıların Türkleri Balkanlar'dan atma ümidini yok ettim. Tahtı kendi isteğimle oğlum Mehmed'e bıraktıysam da tekrar tahta geçip ordunun başına döndüm.", audio: "https://files.catbox.moe/gjd3yg.mp3" },
+            { id: 7, name: "II. MEHMED (FATİH SULTAN MEHMED)", era: "yukselme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Bellini%2C_Gentile_-_Sultan_Mehmet_II.jpg/800px-Bellini%2C_Gentile_-_Sultan_Mehmet_II.jpg", bio: "Ben Fatih Sultan Mehmed Han! Konstantiniyye'yi fethedip aleme nizam veren Cihangir padişahım. Akşemseddin ve Molla Gürani gibi alimlerin rahlesinde yetiştim; Türkçe hariç Arapça, Farsça, Latince, Yunanca, İbranice ve Sırpça olmak üzere 6 dil öğrendim. 21 yaşındayken 'Ya ben İstanbul'u alırım ya İstanbul beni' diyerek yola çıktım. Boğaz'ı kapatmak için Rumeli Hisarı'nı inşa ettirdim. Şahi adı verilen devasa sur yıkan topları bizzat çizip döktürdüm. 72 parça donanmayı bir gecede karadan Haliç'e indirdim. 29 Mayıs 1453 sabahı 1100 yıllık Doğu Roma İmparatorluğu'nu tarihe gömdüm. Bin yıllık Orta Çağ'ı kapatıp Yeni Çağ'ı başlattım. Kayser-i Rûm unvanını alarak İstanbul'u İslam'ın kalbi yaptım. Kanunname-i Âl-i Osman'ı kaleme alarak devletimi cihanşümul bir imparatorluk haline getirdim.", audio: "https://files.catbox.moe/bn8mfk.mp3" },
+            { id: 8, name: "II. BAYEZİD", era: "yukselme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Sultan_II._Bayezit.JPG/800px-Sultan_II._Bayezit.JPG", bio: "Ben II. Bayezid! Dindarlığım ve adaletim sebebiyle Sofi ve Veli unvanlarıyla anıldım. İspanya'daki Engizisyon zulmünden kaçan binlerce Müslüman ve Yahudi'yi Osmanlı donanmasıyla kurtarıp topraklarımıza getirdim.", audio: "https://files.catbox.moe/f8jofk.mp3" },
+            { id: 9, name: "I. SELİM (YAVUZ SULTAN SELİM)", era: "yukselme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Yavuz_Sultan_I._Selim_Han.jpg/800px-Yavuz_Sultan_I._Selim_Han.jpg", bio: "Ben Yavuz Sultan Selim! Sadece 8 yıl süren saltanatıma 80 yıllık fetih sığdırdım. Çaldıran zaferiyle Safevi tehlikesini önledim, Mercidabık ve Ridaniye zaferleriyle Mısır'ı fethettim. Mukaddes Emanetleri İstanbul'a getirerek ilk Osmanlı Halifesi oldum.", audio: "https://files.catbox.moe/9x1le3.mp3" },
+            { id: 10, name: "I. SÜLEYMAN (KANUNİ SULTAN SÜLEYMAN)", era: "yukselme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/EmperorSuleiman.jpg/800px-EmperorSuleiman.jpg", bio: "Ben Kanuni Sultan Süleyman! 46 yıl boyunca adaletle hükmettiğim muhteşem tahtımda, İmparatorluğu 3 kıtaya ulaştırdım. Mohaç Meydan Muharebesi'ni 2 saatte kazandım. Barbaros Hayreddin Paşa ile Akdeniz'i bir Türk gölü haline getirdik.", audio: "https://files.catbox.moe/49ksw3.mp3" },
+            { id: 11, name: "II. SELİM (SARI SELİM)", era: "yukselme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/II._Selim_Han.jpg/800px-II._Selim_Han.jpg", bio: "Ben II. Selim! Dönemimde Kıbrıs adası fethedildi. Mimar Sinan, başyapıtı kabul edilen Selimiye Camii'ni benim dönemimde Edirne'de inşa etti.", audio: "https://files.catbox.moe/onln42.mp3" },
+            { id: 12, name: "III. MURAD", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/III._Murat_Han.jpg/800px-III._Murat_Han.jpg", bio: "Ben III. Murad! Ferhat Paşa Antlaşması ile doğuda Hazar Denizi'ne ulaşarak Osmanlı Devleti'nin doğudaki en geniş sınırlarını çizdim.", audio: "https://files.catbox.moe/auk4hb.mp3" },
+            { id: 13, name: "III. MEHMED", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Mehmed_III.jpg/800px-Mehmed_III.jpg", bio: "Ben III. Mehmed! Kanuni'den sonra ordunun başında sefere çıkan ilk padişahım. Haçova Meydan Muharebesi'ni kazanıp Eğri Fatihi unvanını aldım.", audio: "https://files.catbox.moe/sr2xb1.mp3" },
+            { id: 14, name: "I. AHMED", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Sultan_I._Ahmet.jpg/800px-Sultan_I._Ahmet.jpg", bio: "Ben I. Ahmed! En yaşlı şehzadenin tahta geçmesini sağlayan Ekber ve Erşed sistemini getirdim. İstanbul'un simgesi olan Sultanahmet Camii'ni yaptırdım.", audio: "https://files.catbox.moe/wvx7jh.mp3" },
+            { id: 15, name: "I. MUSTAFA", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Mustafa_1.jpg/800px-Mustafa_1.jpg", bio: "Ben I. Mustafa! Ekber ve Erşed sistemiyle tahta geçen ilk padişahım. İki kez tahta çıkarıldım.", audio: "https://files.catbox.moe/wubj66.mp3" },
+            { id: 16, name: "II. OSMAN (GENÇ OSMAN)", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Osman_2.jpg/800px-Osman_2.jpg", bio: "Ben Genç Osman! Henüz 14 yaşında tahta çıktım. Yeniçeri Ocağı'nı kaldırmak ve devlette reform yapmak istediğim için isyan eden yeniçerilerce şehit edildim.", audio: "https://files.catbox.moe/qypenr.mp3" },
+            { id: 17, name: "IV. MURAD", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/IV._Murat.jpg/800px-IV._Murat.jpg", bio: "Ben IV. Murad! Sert disiplinimle asayişi yeniden sağladım. Revan ve Bağdat seferlerine bizzat katılıp Bağdat Fatihi unvanını aldım.", audio: "https://files.catbox.moe/bzkl8h.mp3" },
+            { id: 18, name: "SULTAN İBRAHİM", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Ibrahim_I.jpg/800px-Ibrahim_I.jpg", bio: "Ben Sultan İbrahim! Dönemimde Akdeniz hâkimiyetimiz için kritik olan 24 yıllık çetin Girit Kuşatması başlatıldı.", audio: "https://files.catbox.moe/u8ik6s.mp3" },
+            { id: 19, name: "IV. MEHMED (AVCI MEHMED)", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Sultan_Mehmed_IV_%282%29.jpg/800px-Sultan_Mehmed_IV_%282%29.jpg", bio: "Ben IV. Mehmed! 6 yaşındayken tahta oturdum ve 39 yıl kaldım. Av tutkum sebebiyle Avcı Mehmed olarak anıldım.", audio: "https://files.catbox.moe/oae2ue.mp3" },
+            { id: 20, name: "II. SÜLEYMAN", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/S%C3%BCleyman_II.jpg/800px-Süleyman_II.jpg", bio: "Ben II. Süleyman! Sadrazamlığa getirdiğim Köprülü Fazıl Mustafa Paşa sayesinde askeri ve mali alanda toparlanma sağladık.", audio: "https://files.catbox.moe/7me1aq.mp3" },
+            { id: 21, name: "II. AHMED", era: "duraklama", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Ahmet_II.jpg/800px-Ahmet_II.jpg", bio: "Ben II. Ahmed! Kutsal İttifak devletleriyle yapılan ağır savaşlar döneminde tahtta kaldım.", audio: "https://files.catbox.moe/uz1chc.mp3" },
+            { id: 22, name: "II. MUSTAFA", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/II._Mustafa.jpg/800px-II._Mustafa.jpg", bio: "Ben II. Mustafa! 1699 Karlofça Antlaşması ile Batı'da ilk kez büyük çapta toprak kaybettik.", audio: "https://files.catbox.moe/4c37x3.mp3" },
+            { id: 23, name: "III. AHMET", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/III._Ahmet.jpg/800px-III._Ahmet.jpg", bio: "Ben III. Ahmed! Lale Devri padişahıyım. İbrahim Müteferrika ile ilk Türk matbaasını kurduk.", audio: "https://files.catbox.moe/2bzk05.mp3" },
+            { id: 24, name: "I. MAHMUD", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Mahmud1.jpg/800px-Mahmud1.jpg", bio: "Ben I. Mahmud! Hendesehane'yi kurdum. 1739 Belgrat Antlaşması ile büyük bir zafer kazandım.", audio: "https://files.catbox.moe/fgfonx.mp3" },
+            { id: 25, name: "III. OSMAN", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/OsmanIII.jpg/800px-OsmanIII.jpg", bio: "Ben III. Osman! Nuruosmaniye Camii'ni tamamlatarak ibadete açtım.", audio: "https://files.catbox.moe/f62iat.mp3" },
+            { id: 26, name: "III. MUSTAFA", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Mustafa3.jpg/800px-Mustafa3.jpg", bio: "Ben III. Mustafa! Deniz Mühendishanesi'ni kurarak modern deniz subayları yetiştirilmesini sağladım.", audio: "https://files.catbox.moe/hik3dv.mp3" },
+            { id: 27, name: "I. ABDÜLHAMİD", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Abdulhamid_I.jpg/800px-Abdulhamid_I.jpg", bio: "Ben I. Abdülhamid! Askeri reformlara hız verip İstihkam Okulu'nu açtım.", audio: "https://files.catbox.moe/mk1fi5.mp3" },
+            { id: 28, name: "III. SELİM", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Joseph_Warnia-Zarzecki_-_Sultan_Selim_III_-_Google_Art_Project.jpg/800px-Joseph_Warnia-Zarzecki_-_Sultan_Selim_III_-_Google_Art_Project.jpg", bio: "Ben III. Selim! Batı tarzında köklü yenilikler içeren Nizam-ı Cedid hareketini ve yeni orduyu kurdum.", audio: "https://files.catbox.moe/3ya8dq.mp3" },
+            { id: 29, name: "IV. MUSTAFA", era: "gerileme", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/IV._Mustafa.jpg/800px-IV._Mustafa.jpg", bio: "Ben IV. Mustafa! Kabakçı Mustafa İsyanı sonrasında tahta çıkarıldım.", audio: "https://files.catbox.moe/bujvp1.mp3" },
+            { id: 30, name: "II. MAHMUD", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Athanasios_Karantz%28ou%29las_-_Sultan_Mahmud_II_-_Google_Art_Project.jpg/800px-Athanasios_Karantz%28ou%29las_-_Sultan_Mahmud_II_-_Google_Art_Project.jpg", bio: "Ben II. Mahmud! 1826'da Yeniçeri Ocağı'nı kaldırdım. Kıyafet devrimi yaptım, fes ve ceket getirdim.", audio: "https://files.catbox.moe/z8qkvh.mp3" },
+            { id: 31, name: "SULTAN ABDÜLMECİD", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Sultan_Abd%C3%BClmecid_-_Google_Art_Project.jpg/800px-Sultan_Abd%C3%BClmecid_-_Google_Art_Project.jpg", bio: "Ben Sultan Abdülmecid! Tanzimat ve Islahat Fermanı'nı ilan ettirdim. Dolmabahçe Sarayı'nı inşa ettirdim.", audio: "https://files.catbox.moe/3ay45u.mp3" },
+            { id: 32, name: "SULTAN ABDÜLAZİZ", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Abdulaziz.jpg/800px-Abdulaziz.jpg", bio: "Ben Sultan Abdülaziz! Avrupa devletlerine resmi ziyarette bulunan ilk Osmanlı padişahıyım. Güçlü bir zırhlı donanma kurdum.", audio: "https://files.catbox.moe/8y66tp.mp3" },
+            { id: 33, name: "V. MURAD", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Portrait_of_Murad_V.jpg/800px-Portrait_of_Murad_V.jpg", bio: "Ben V. Murad! 93 gün ile tahtta en kısa süre kalan padişahım.", audio: "https://files.catbox.moe/ktaz9o.mp3" },
+            { id: 34, name: "II. ABDÜLHAMİD", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Abdul_Hamid_II_in_Balmoral_Castle_in_1867-colored.jpg/800px-Abdul_Hamid_II_in_Balmoral_Castle_in_1867-colored.jpg", bio: "Ben II. Abdülhamid! Meşrutiyet'i ilan ettim. Hicaz Demiryolu'nu yaptırdım, binlerce okul ve hastane kurdum.", audio: "https://files.catbox.moe/wl82h0.mp3" },
+            { id: 35, name: "V. MEHMED REŞAD", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/SultanmehmedV1917.jpg/800px-SultanmehmedV1917.jpg", bio: "Ben V. Mehmed Reşad! Saltanatım boyunca Balkan Savaşları ve Çanakkale Zaferi'nin yaşandığı I. Dünya Savaşını gördüm.", audio: "https://files.catbox.moe/lucree.mp3" },
+            { id: 36, name: "VI. MEHMED VAHİDEDDİN", era: "dagilma", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Sultan_Mehmed_VI.jpg/800px-Sultan_Mehmed_VI.jpg", bio: "Ben VI. Mehmed Vahideddin! Osmanlı'nın son padişahıyım.", audio: "https://files.catbox.moe/j6pxp2.mp3" }
         ];
 
         let currentActiveId = null;
-        let syntheticAudioUtterance = null;
+        let audioElement = new Audio();
         let currentEraFilter = 'all';
 
         function renderSultans() {
@@ -428,7 +490,7 @@
             });
 
             if (filtered.length === 0) {
-                container.innerHTML = `<div style="text-align:center; padding: 40px; color: #888;">Aradığınız kriterlere uygun padişah bulunamadı.</div>`;
+                container.innerHTML = `<div style="text-align:center; padding: 40px; color: #888; grid-column: 1 / -1;">Aradığınız kriterlere uygun padişah bulunamadı.</div>`;
                 return;
             }
 
@@ -441,7 +503,7 @@
                         <img src="${sultan.img}" alt="${sultan.name}" loading="lazy" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'">
                     </div>
                     <div class="sultan-name">${sultan.name}</div>
-                    <div class="sultan-quote-preview">“${sultan.bio}”</div>
+                    <div class="sultan-quote-preview">${sultan.bio}</div>
                     <button class="play-btn" onclick="playSultanAudio(${sultan.id})">▶ Biyografi & Sesli Anlatım</button>
                 `;
                 container.appendChild(card);
@@ -463,6 +525,14 @@
             renderSultans();
         }
 
+        function setColumns(cols, btnElement) {
+            const container = document.getElementById('sultans-container');
+            container.className = `container cols-${cols}`;
+            
+            document.querySelectorAll('.layout-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+        }
+
         function playSultanAudio(id) {
             const sultan = sultans.find(s => s.id === id);
             if (!sultan) return;
@@ -474,55 +544,51 @@
             
             document.getElementById('audio-panel').classList.add('active');
 
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                syntheticAudioUtterance = new SpeechSynthesisUtterance(sultan.bio);
-                syntheticAudioUtterance.lang = 'tr-TR';
-                syntheticAudioUtterance.rate = 0.95;
-                
-                syntheticAudioUtterance.onend = function() {
+            if (sultan.audio) {
+                audioElement.src = sultan.audio;
+                audioElement.play().then(() => {
+                    document.getElementById('audio-status').innerText = "SESLİ ANLATIM ÇALINIYOR...";
+                    document.getElementById('pause-play-btn').innerText = "DURDUR";
+                }).catch(e => {
+                    console.log("Ses çalma hatası:", e);
+                });
+
+                audioElement.onended = function() {
                     document.getElementById('audio-status').innerText = "SESLİ ANLATIM TAMAMLANDI.";
                     document.getElementById('pause-play-btn').innerText = "BAŞLAT";
                 };
-
-                window.speechSynthesis.speak(syntheticAudioUtterance);
-                document.getElementById('audio-status').innerText = "SESLİ ANLATIM ÇALINIYOR...";
-                document.getElementById('pause-play-btn').innerText = "DURDUR";
+            } else {
+                document.getElementById('audio-status').innerText = "BU PADİŞAH İÇİN SES DOSYASI HENÜZ EKLENMEDİ.";
             }
         }
 
         function togglePlayPause() {
-            if (!('speechSynthesis' in window)) return;
-
             const btn = document.getElementById('pause-play-btn');
             const status = document.getElementById('audio-status');
 
-            if (window.speechSynthesis.speaking) {
-                if (window.speechSynthesis.paused) {
-                    window.speechSynthesis.resume();
-                    btn.innerText = "DURDUR";
-                    status.innerText = "SESLİ ANLATIM ÇALINIYOR...";
-                } else {
-                    window.speechSynthesis.pause();
-                    btn.innerText = "DEVAM ET";
-                    status.innerText = "SESLİ ANLATIM DURDURULDU.";
-                }
-            } else if (currentActiveId !== null) {
-                playSultanAudio(currentActiveId);
+            if (!audioElement.paused) {
+                audioElement.pause();
+                btn.innerText = "DEVAM ET";
+                status.innerText = "SESLİ ANLATIM DURDURULDU.";
+            } else if (audioElement.src) {
+                audioElement.play();
+                btn.innerText = "DURDUR";
+                status.innerText = "SESLİ ANLATIM ÇALINIYOR...";
             }
         }
 
         function replayAudio() {
-            if (currentActiveId !== null) {
-                playSultan_Audio(currentActiveId);
+            if (audioElement.src) {
+                audioElement.currentTime = 0;
+                audioElement.play();
+                document.getElementById('pause-play-btn').innerText = "DURDUR";
+                document.getElementById('audio-status').innerText = "SESLİ ANLATIM ÇALINIYOR...";
             }
         }
 
         function closeAudioPanel() {
             document.getElementById('audio-panel').classList.remove('active');
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-            }
+            audioElement.pause();
             currentActiveId = null;
         }
 
