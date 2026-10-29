@@ -342,7 +342,7 @@
             text-align: center;
         }
 
-        .feedback-form input, .feedback-form textarea {
+        .feedback-form textarea {
             width: 100%;
             padding: 10px;
             margin-bottom: 12px;
@@ -413,9 +413,8 @@
     <div class="feedback-section">
         <h3>Hata Bildir / Düzeltme Gönder</h3>
         <form class="feedback-form" onsubmit="sendEmail(event)">
-            <input type="email" id="senderEmail" placeholder="E-posta adresiniz" required>
-            <textarea id="senderMessage" rows="3" placeholder="Bildirmek istediğiniz hata veya öneri..." required></textarea>
-            <button type="submit">E-Posta Gönder</button>
+            <textarea id="senderMessage" rows="4" placeholder="Bildirmek istediğiniz hata veya öneriyi buraya yazın..." required></textarea>
+            <button type="submit">Doğrudan E-Posta Gönder</button>
         </form>
     </div>
 
@@ -594,9 +593,8 @@
 
         function sendEmail(event) {
             event.preventDefault();
-            const email = document.getElementById('senderEmail').value;
             const message = document.getElementById('senderMessage').value;
-            const mailtoLink = `mailto:erenbeyoglu@gmail.com?subject=Osmanli%20Sitesi%20Hata%20Bildirimi&body=Gonderen:%20${encodeURIComponent(email)}%0A%0AMesaj:%0A${encodeURIComponent(message)}`;
+            const mailtoLink = `mailto:beyoglueren7@gmail.com?subject=Osmanli%20Sitesi%20Hata%20Bildirimi&body=Ziyaretci%20Mesaji:%0A${encodeURIComponent(message)}`;
             window.location.href = mailtoLink;
         }
 
