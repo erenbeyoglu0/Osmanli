@@ -412,10 +412,10 @@
 
     <div class="feedback-section">
         <h3>Hata Bildir / Düzeltme Gönder</h3>
-        <form class="feedback-form" action="https://formspree.io/f/xlgppvye" method="POST">
-            <input type="email" name="email" placeholder="E-posta adresiniz" required>
-            <textarea name="message" rows="3" placeholder="Bildirmek istediğiniz hata veya öneri..." required></textarea>
-            <button type="submit">Doğrudan Gönder</button>
+        <form class="feedback-form" onsubmit="sendEmail(event)">
+            <input type="email" id="senderEmail" placeholder="E-posta adresiniz" required>
+            <textarea id="senderMessage" rows="3" placeholder="Bildirmek istediğiniz hata veya öneri..." required></textarea>
+            <button type="submit">E-Posta Gönder</button>
         </form>
     </div>
 
@@ -590,6 +590,14 @@
             document.getElementById('audio-panel').classList.remove('active');
             audioElement.pause();
             currentActiveId = null;
+        }
+
+        function sendEmail(event) {
+            event.preventDefault();
+            const email = document.getElementById('senderEmail').value;
+            const message = document.getElementById('senderMessage').value;
+            const mailtoLink = `mailto:erenbeyoglu@gmail.com?subject=Osmanli%20Sitesi%20Hata%20Bildirimi&body=Gonderen:%20${encodeURIComponent(email)}%0A%0AMesaj:%0A${encodeURIComponent(message)}`;
+            window.location.href = mailtoLink;
         }
 
         window.onload = renderSultans;
